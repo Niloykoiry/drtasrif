@@ -1,9 +1,19 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 
 const en = {
-  brand: { name: "Dr. Tasrif Ahmed", role: "Maxillofacial & Oral Cancer Surgeon" },
+  brand: {
+    name: "Dr. Tasrif Ahmed",
+    role: "Oral & Maxillofacial Surgeon",
+  },
   nav: [
     { id: "home", label: "Home" },
     { id: "about", label: "About" },
@@ -16,32 +26,42 @@ const en = {
   cta: "Book Appointment",
   close: "Close",
   hero: {
-    badge: "Verified Professional",
+    badge: "Verified Professional BMDC no 6060 (BDS)",
     title: "Dr. Tasrif Ahmed",
-    role: "Maxillofacial & Oral Cancer Surgeon",
-    intro: "Compassionate care, advanced treatment, and better outcomes for your oral and facial health.",
+    role: "Oral & Maxillofacial Surgeon",
+    intro:
+      "Compassionate care, advanced treatment, and better outcomes for your oral and facial health.",
     location: "Dhaka, Bangladesh",
     book: "Book an Appointment",
     watch: "Watch Introduction",
     scriptLine1: "Healthy Smiles",
     scriptLine2: "Better Lives",
-    chips: ["Patient-First Care", "Evidence-Based Practice"],
+    chips: ["Patient-First Care", "Precision. Function. Aesthetics."],
     scroll: "Scroll to explore",
   },
   about: {
     label: "About Me",
     heading: "Dedicated to Advanced Care and Better Outcomes",
-    body: "I am a Maxillofacial & Oral Cancer Surgeon with a strong commitment to providing compassionate, evidence-based care. My goal is to help patients achieve better function, improved aesthetics, and a higher quality of life.",
+    body: "I am a Oral & Maxillofacial Surgeon with a strong commitment to providing compassionate, evidence-based care. My goal is to help patients achieve better function, improved aesthetics, and a higher quality of life.",
     learnMore: "Learn More",
     cards: [
-      { title: "Education", desc: "Qualifications and academic background (placeholder information)" },
-      { title: "Experience", desc: "Professional experience and training (placeholder information)" },
-      { title: "Approach", desc: "Patient-centered, ethical and modern treatment approach" },
+      {
+        title: "Education",
+        desc: "Qualifications and academic background ",
+      },
+      {
+        title: "Experience",
+        desc: "Professional experience and training ",
+      },
+      {
+        title: "Approach",
+        desc: "Patient-centered, ethical and modern treatment approach",
+      },
     ],
     overlay: ["Science", "Skill", "Compassion"],
     modal: {
       title: "About Dr. Tasrif Ahmed",
-      p1: "Dr. Tasrif Ahmed is a Maxillofacial & Oral Cancer Surgeon based in Dhaka, Bangladesh. He focuses on compassionate, evidence-based surgical care for conditions of the mouth, jaws and face.",
+      p1: "Dr. Tasrif Ahmed is a Oral & Maxillofacial Surgeon based in Dhaka, Bangladesh. He focuses on compassionate, evidence-based surgical care for conditions of the mouth, jaws and face.",
       p2: "His practice emphasizes careful diagnosis, clear communication and individualized treatment planning, so that every patient understands their options and feels supported throughout care.",
       points: [
         "Patient-centered, ethical decision making",
@@ -59,32 +79,77 @@ const en = {
     covers: "What it covers",
     scopeNote: "Scope overview — placeholder content",
     cards: [
-      { title: "Maxillofacial Surgery", desc: "Trauma, deformities, jaw surgery and reconstructive procedures." },
-      { title: "Oral Cancer Surgery", desc: "Diagnosis, surgical treatment and reconstruction." },
-      { title: "Dental Implants", desc: "Functional and aesthetic implant solutions." },
-      { title: "Facial Reconstruction", desc: "Restoring form and function after injury or surgery." },
-      { title: "Other Specialties", desc: "Cleft lip & palate, TMJ, oral and maxillofacial conditions." },
+      {
+        title: "Maxillofacial Surgery",
+        desc: "Trauma, deformities, jaw surgery and reconstructive procedures.",
+      },
+      {
+        title: "Oral Cancer Surgery",
+        desc: "Diagnosis, surgical treatment and reconstruction.",
+      },
+      {
+        title: "Dental Implants",
+        desc: "Functional and aesthetic implant solutions.",
+      },
+      {
+        title: "Facial Reconstruction",
+        desc: "Restoring form and function after injury or surgery.",
+      },
+      {
+        title: "Other Specialties",
+        desc: "Cleft lip & palate, TMJ, oral and maxillofacial conditions.",
+      },
     ],
     details: [
       {
-        overview: "Maxillofacial surgery addresses injuries, deformities and conditions of the jaws, face and skull, with care planned around restoring function, appearance and comfort.",
-        points: ["Facial trauma and fracture care", "Jaw correction (orthognathic) surgery", "Cyst and lesion management", "Reconstructive procedures"],
+        overview:
+          "Maxillofacial surgery addresses injuries, deformities and conditions of the jaws, face and skull, with care planned around restoring function, appearance and comfort.",
+        points: [
+          "Facial trauma and fracture care",
+          "Jaw correction (orthognathic) surgery",
+          "Cyst and lesion management",
+          "Reconstructive procedures",
+        ],
       },
       {
-        overview: "Oral cancer surgery focuses on early diagnosis, safe removal of disease and careful reconstruction to preserve speech, swallowing and appearance.",
-        points: ["Oral cancer diagnosis and staging", "Tumor removal surgery", "Reconstruction and rehabilitation", "Long-term follow-up care"],
+        overview:
+          "Oral cancer surgery focuses on early diagnosis, safe removal of disease and careful reconstruction to preserve speech, swallowing and appearance.",
+        points: [
+          "Oral cancer diagnosis and staging",
+          "Tumor removal surgery",
+          "Reconstruction and rehabilitation",
+          "Long-term follow-up care",
+        ],
       },
       {
-        overview: "Dental implant surgery replaces missing teeth with titanium implants, restoring chewing function and natural aesthetics.",
-        points: ["Single and multiple tooth replacement", "Implant-supported prosthetics", "Bone grafting when needed", "Aesthetic zone implants"],
+        overview:
+          "Dental implant surgery replaces missing teeth with titanium implants, restoring chewing function and natural aesthetics.",
+        points: [
+          "Single and multiple tooth replacement",
+          "Implant-supported prosthetics",
+          "Bone grafting when needed",
+          "Aesthetic zone implants",
+        ],
       },
       {
-        overview: "Facial reconstruction restores form and function after injury, tumor surgery or congenital conditions, using modern reconstructive techniques.",
-        points: ["Soft tissue and bone reconstruction", "Scar revision and refinement", "Post-trauma deformity correction", "Microvascular reconstructive options"],
+        overview:
+          "Facial reconstruction restores form and function after injury, tumor surgery or congenital conditions, using modern reconstructive techniques.",
+        points: [
+          "Soft tissue and bone reconstruction",
+          "Scar revision and refinement",
+          "Post-trauma deformity correction",
+          "Microvascular reconstructive options",
+        ],
       },
       {
-        overview: "A range of other oral and maxillofacial conditions are managed with the same patient-first approach.",
-        points: ["Cleft lip & palate care", "Temporomandibular joint (TMJ) conditions", "Salivary gland disorders", "Oral infections and pain conditions"],
+        overview:
+          "A range of other oral and maxillofacial conditions are managed with the same patient-first approach.",
+        points: [
+          "Cleft lip & palate care",
+          "Temporomandibular joint (TMJ) conditions",
+          "Salivary gland disorders",
+          "Oral infections and pain conditions",
+        ],
       },
     ],
   },
@@ -151,22 +216,28 @@ const en = {
     email: "Email Address (optional)",
     date: "Preferred Date",
     reason: "Reason for Visit",
-    reasons: ["Consultation", "Maxillofacial Surgery", "Oral Cancer Evaluation", "Dental Implants", "Other"],
+    reasons: [
+      "Consultation",
+      "Maxillofacial Surgery",
+      "Oral Cancer Evaluation",
+      "Dental Implants",
+      "Other",
+    ],
     submit: "Submit Request",
-    success: "Thank you! Your request has been received. I will contact you soon to confirm your appointment.",
+    success:
+      "Thank you! Your request has been received. I will contact you soon to confirm your appointment.",
     urgent: "For urgent cases, please call directly.",
     hours: "Mon – Sat, 9:00 AM – 5:00 PM",
     hoursNote: "(Clinic Hours)",
-    placeholder: "(placeholder)",
-    phoneValue: "+880 1XXX-XXXXXX",
-    emailValue: "info@drtasrifahmed.com",
+    phoneValue: "+8801716-200358",
+    emailValue: "dr.tasrif@gmail.com",
   },
   contact: {
     label: "Contact",
-    heading: "Visit Our Clinic",
+    heading: "Visit My Clinic",
     body: "Located in Dhaka, our clinic provides a comfortable, modern and safe environment for your treatment.",
     address: "Dhaka, Bangladesh",
-    addressNote: "(Clinic Address Placeholder)",
+    addressNote: "(196 Green Road, Dhaka, Bangladesh, 1205)",
     cardTitle: "Clinic Location",
     cardSub: "Dhaka, Bangladesh",
     viewMap: "View on Map",
@@ -174,7 +245,7 @@ const en = {
   },
   footer: {
     copyright: "© 2025 Dr. Tasrif Ahmed. All rights reserved.",
-    tagline: ["Better Care", "Better Smiles", "Brighter Future"],
+    tagline: ["Precision", "Function", "Aesthetics."],
   },
   chat: {
     whatsapp: "Chat on WhatsApp",
@@ -185,7 +256,10 @@ const en = {
 export type Dict = typeof en;
 
 const bn: Dict = {
-  brand: { name: "ডা. তাসরিফ আহমেদ", role: "ম্যাক্সিলোফেসিয়াল ও ওরাল ক্যান্সার সার্জন" },
+  brand: {
+    name: "ডা. তাসরিফ আহমেদ",
+    role: "ম্যাক্সিলোফেসিয়াল ও ওরাল ক্যান্সার সার্জন",
+  },
   nav: [
     { id: "home", label: "হোম" },
     { id: "about", label: "পরিচিতি" },
@@ -201,13 +275,14 @@ const bn: Dict = {
     badge: "যাচাইকৃত বিশেষজ্ঞ",
     title: "ডা. তাসরিফ আহমেদ",
     role: "ম্যাক্সিলোফেসিয়াল ও ওরাল ক্যান্সার সার্জন",
-    intro: "আপনার মুখ ও চোয়ালের স্বাস্থ্যের জন্য আন্তরিক সেবা, আধুনিক চিকিৎসা এবং উত্তম ফলাফল।",
+    intro:
+      "আপনার মুখ ও চোয়ালের স্বাস্থ্যের জন্য আন্তরিক সেবা, আধুনিক চিকিৎসা এবং উত্তম ফলাফল।",
     location: "ঢাকা, বাংলাদেশ",
     book: "অ্যাপয়েন্টমেন্ট বুক করুন",
     watch: "পরিচিতি ভিডিও দেখুন",
     scriptLine1: "সুস্থ হাসি",
     scriptLine2: "উজ্জ্বল জীবন",
-    chips: ["রোগীকেন্দ্রিক সেবা", "প্রমাণভিত্তিক চিকিৎসা"],
+    chips: ["রোগীকেন্দ্রিক সেবা", "যথার্থতা। কার্যকারিতা। নান্দনিকতা।"],
     scroll: "নিচে দেখুন",
   },
   about: {
@@ -225,7 +300,11 @@ const bn: Dict = {
       title: "ডা. তাসরিফ আহমেদ সম্পর্কে",
       p1: "ডা. তাসরিফ আহমেদ ঢাকা, বাংলাদেশ-ভিত্তিক একজন ম্যাক্সিলোফেসিয়াল ও ওরাল ক্যান্সার সার্জন। তিনি মুখ, চোয়াল ও মুখমণ্ডলের রোগে আন্তরিক ও প্রমাণভিত্তিক সার্জিকাল সেবায় কেন্দ্রীত।",
       p2: "তাঁর চিকিৎসায় যত্নশীল নির্ণয়, স্পষ্ট যোগাযোগ ও ব্যক্তিগতকৃত চিকিৎসা পরিকল্পনা গুরুত্ব পায়, যেন প্রতিটি রোগী নিজের চিকিৎসার বিকল্পগুলো বুঝতে পারেন এবং পুরো যত্নের সময় নিজেকে সহায়তা অনুভব করেন।",
-      points: ["রোগীকেন্দ্রিক ও নৈতিক সিদ্ধান্ত", "আধুনিক, প্রমাণভিত্তিক সার্জিকাল পদ্ধতি", "কার্যক্ষমতা, সৌন্দর্য ও জীবনমানের প্রতি গুরুত্ব"],
+      points: [
+        "রোগীকেন্দ্রিক ও নৈতিক সিদ্ধান্ত",
+        "আধুনিক, প্রমাণভিত্তিক সার্জিকাল পদ্ধতি",
+        "কার্যক্ষমতা, সৌন্দর্য ও জীবনমানের প্রতি গুরুত্ব",
+      ],
       note: "বিস্তারিত যোগ্যতা ও অভিজ্ঞতা শীঘ্রই যুক্ত হবে (নমুনা তথ্য)।",
     },
   },
@@ -237,32 +316,77 @@ const bn: Dict = {
     covers: "যা অন্তর্ভুক্ত",
     scopeNote: "পরিসর সারসংক্ষেপ — নমুনা তথ্য",
     cards: [
-      { title: "ম্যাক্সিলোফেসিয়াল সার্জারি", desc: "আঘাত, বিকৃতি, চোয়ালের সার্জারি ও পুনর্গঠনমূলক প্রক্রিয়া।" },
-      { title: "ওরাল ক্যান্সার সার্জারি", desc: "নির্ণয়, সার্জিকাল চিকিৎসা ও পুনর্গঠন।" },
-      { title: "ডেন্টাল ইমপ্লান্ট", desc: "কার্যকর ও নান্দনিক ইমপ্লান্ট সমাধান।" },
-      { title: "ফেসিয়াল রিকনস্ট্রাকশন", desc: "আঘাত বা সার্জারির পর গঠন ও কার্যক্ষমতা পুনরুদ্ধার।" },
-      { title: "অন্যান্য বিশেষায়ন", desc: "ক্লেফট লিপ ও প্যালেট, TMJ, মুখ ও চোয়ালের বিভিন্ন রোগ।" },
+      {
+        title: "ম্যাক্সিলোফেসিয়াল সার্জারি",
+        desc: "আঘাত, বিকৃতি, চোয়ালের সার্জারি ও পুনর্গঠনমূলক প্রক্রিয়া।",
+      },
+      {
+        title: "ওরাল ক্যান্সার সার্জারি",
+        desc: "নির্ণয়, সার্জিকাল চিকিৎসা ও পুনর্গঠন।",
+      },
+      {
+        title: "ডেন্টাল ইমপ্লান্ট",
+        desc: "কার্যকর ও নান্দনিক ইমপ্লান্ট সমাধান।",
+      },
+      {
+        title: "ফেসিয়াল রিকনস্ট্রাকশন",
+        desc: "আঘাত বা সার্জারির পর গঠন ও কার্যক্ষমতা পুনরুদ্ধার।",
+      },
+      {
+        title: "অন্যান্য বিশেষায়ন",
+        desc: "ক্লেফট লিপ ও প্যালেট, TMJ, মুখ ও চোয়ালের বিভিন্ন রোগ।",
+      },
     ],
     details: [
       {
-        overview: "ম্যাক্সিলোফেসিয়াল সার্জারি চোয়াল, মুখ ও খুলির আঘাত, বিকৃতি ও রোগের চিকিৎসা করে; কার্যক্ষমতা, গঠন ও আরাম ফিরিয়ে আনাই লক্ষ্য।",
-        points: ["মুখের আঘাত ও ফ্র্যাকচার চিকিৎসা", "চোয়াল সংশোধন (অর্থোগনাথিক) সার্জারি", "সিস্ট ও লেশন ব্যবস্থাপনা", "পুনর্গঠনমূলক প্রক্রিয়া"],
+        overview:
+          "ম্যাক্সিলোফেসিয়াল সার্জারি চোয়াল, মুখ ও খুলির আঘাত, বিকৃতি ও রোগের চিকিৎসা করে; কার্যক্ষমতা, গঠন ও আরাম ফিরিয়ে আনাই লক্ষ্য।",
+        points: [
+          "মুখের আঘাত ও ফ্র্যাকচার চিকিৎসা",
+          "চোয়াল সংশোধন (অর্থোগনাথিক) সার্জারি",
+          "সিস্ট ও লেশন ব্যবস্থাপনা",
+          "পুনর্গঠনমূলক প্রক্রিয়া",
+        ],
       },
       {
-        overview: "ওরাল ক্যান্সার সার্জারিতে দ্রুত নির্ণয়, রোগের নিরাপদ অপসরণ এবং বাক্‌স্বর, গিলন ও গঠন ঠিক রাখতে যত্নশীল পুনর্গঠন গুরুত্ব পায়।",
-        points: ["ওরাল ক্যান্সার নির্ণয় ও স্টেজিং", "টিউমার অপসারণ সার্জারি", "পুনর্গঠন ও পুনর্বাসন", "দীর্ঘমেয়াদি ফলো-আপ সেবা"],
+        overview:
+          "ওরাল ক্যান্সার সার্জারিতে দ্রুত নির্ণয়, রোগের নিরাপদ অপসরণ এবং বাক্‌স্বর, গিলন ও গঠন ঠিক রাখতে যত্নশীল পুনর্গঠন গুরুত্ব পায়।",
+        points: [
+          "ওরাল ক্যান্সার নির্ণয় ও স্টেজিং",
+          "টিউমার অপসারণ সার্জারি",
+          "পুনর্গঠন ও পুনর্বাসন",
+          "দীর্ঘমেয়াদি ফলো-আপ সেবা",
+        ],
       },
       {
-        overview: "ডেন্টাল ইমপ্লান্ট সার্জারি টাইটানিয়াম ইমপ্লান্ট দিয়ে অনুপস্থিত দাঁত প্রতিস্থাপন করে চর্বণ ও নান্দনিকতা ফিরিয়ে আনে।",
-        points: ["একক ও একাধিক দাঁত প্রতিস্থাপন", "ইমপ্লান্ট-সমর্থিত প্রস্থেটিক্স", "প্রয়োজনে বোন গ্রাফটিং", "সৌন্দর্য অঞ্চলের ইমপ্লান্ট"],
+        overview:
+          "ডেন্টাল ইমপ্লান্ট সার্জারি টাইটানিয়াম ইমপ্লান্ট দিয়ে অনুপস্থিত দাঁত প্রতিস্থাপন করে চর্বণ ও নান্দনিকতা ফিরিয়ে আনে।",
+        points: [
+          "একক ও একাধিক দাঁত প্রতিস্থাপন",
+          "ইমপ্লান্ট-সমর্থিত প্রস্থেটিক্স",
+          "প্রয়োজনে বোন গ্রাফটিং",
+          "সৌন্দর্য অঞ্চলের ইমপ্লান্ট",
+        ],
       },
       {
-        overview: "ফেসিয়াল রিকনস্ট্রাকশন আঘাত, টিউমার সার্জারি বা জন্মগত অবস্থার পর গঠন ও কার্যক্ষমতা পুনরুদ্ধার করে।",
-        points: ["সফট টিস্যু ও অস্থি পুনর্গঠন", "দাগ সংশোধন ও উন্নয়ন", "আঘাত-পরবর্তী বিকৃতি সংশোধন", "মাইক্রোভাসকুলার পুনর্গঠন বিকল্প"],
+        overview:
+          "ফেসিয়াল রিকনস্ট্রাকশন আঘাত, টিউমার সার্জারি বা জন্মগত অবস্থার পর গঠন ও কার্যক্ষমতা পুনরুদ্ধার করে।",
+        points: [
+          "সফট টিস্যু ও অস্থি পুনর্গঠন",
+          "দাগ সংশোধন ও উন্নয়ন",
+          "আঘাত-পরবর্তী বিকৃতি সংশোধন",
+          "মাইক্রোভাসকুলার পুনর্গঠন বিকল্প",
+        ],
       },
       {
-        overview: "অন্যান্য মুখ ও চোয়ালের রোগও একই রোগীকেন্দ্রিক পদ্ধতিতে চিকিৎসা করা হয়।",
-        points: ["ক্লেফট লিপ ও প্যালেট সেবা", "টেম্পোরোম্যান্ডিবুলার জয়েন্ট (TMJ) রোগ", "লালাগ্রন্থির রোগ", "মুখের সংক্রমণ ও ব্যথার অবস্থা"],
+        overview:
+          "অন্যান্য মুখ ও চোয়ালের রোগও একই রোগীকেন্দ্রিক পদ্ধতিতে চিকিৎসা করা হয়।",
+        points: [
+          "ক্লেফট লিপ ও প্যালেট সেবা",
+          "টেম্পোরোম্যান্ডিবুলার জয়েন্ট (TMJ) রোগ",
+          "লালাগ্রন্থির রোগ",
+          "মুখের সংক্রমণ ও ব্যথার অবস্থা",
+        ],
       },
     ],
   },
@@ -329,15 +453,21 @@ const bn: Dict = {
     email: "ইমেইল ঠিকানা (ঐচ্ছিক)",
     date: "পছন্দের তারিখ",
     reason: "আগমনের কারণ",
-    reasons: ["পরামর্শ", "ম্যাক্সিলোফেসিয়াল সার্জারি", "ওরাল ক্যান্সার মূল্যায়ন", "ডেন্টাল ইমপ্লান্ট", "অন্যান্য"],
+    reasons: [
+      "পরামর্শ",
+      "ম্যাক্সিলোফেসিয়াল সার্জারি",
+      "ওরাল ক্যান্সার মূল্যায়ন",
+      "ডেন্টাল ইমপ্লান্ট",
+      "অন্যান্য",
+    ],
     submit: "অনুরোধ পাঠান",
-    success: "ধন্যবাদ! আপনার অনুরোধ গ্রহণ করা হয়েছে। অ্যাপয়েন্টমেন্ট নিশ্চিত করতে আমি শীঘ্রই যোগাযোগ করব।",
+    success:
+      "ধন্যবাদ! আপনার অনুরোধ গ্রহণ করা হয়েছে। অ্যাপয়েন্টমেন্ট নিশ্চিত করতে আমি শীঘ্রই যোগাযোগ করব।",
     urgent: "জরুরি ক্ষেত্রে সরাসরি কল করুন।",
     hours: "সোম – শনি, সকাল ৯:০০ – বিকাল ৫:০০",
     hoursNote: "(ক্লিনিক সময়)",
-    placeholder: "(নমুনা)",
-    phoneValue: "+880 1XXX-XXXXXX",
-    emailValue: "info@drtasrifahmed.com",
+    phoneValue: "+8801716-200358",
+    emailValue: "dr.tasrif@gmail.com",
   },
   contact: {
     label: "যোগাযোগ",
@@ -364,7 +494,11 @@ export type Lang = "en" | "bn";
 
 const dicts: Record<Lang, Dict> = { en, bn };
 
-const I18nContext = createContext<{ lang: Lang; setLang: (l: Lang) => void; t: Dict }>({
+const I18nContext = createContext<{
+  lang: Lang;
+  setLang: (l: Lang) => void;
+  t: Dict;
+}>({
   lang: "en",
   setLang: () => {},
   t: en,

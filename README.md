@@ -1,6 +1,6 @@
 # Dr. Tasrif Ahmed — Portfolio Website
 
-Modern, animated portfolio website for Dr. Tasrif Ahmed, Maxillofacial & Oral Cancer Surgeon (Dhaka, Bangladesh).
+Modern, animated portfolio website for Dr. Tasrif Ahmed, Oral & Maxillofacial Surgeon (Dhaka, Bangladesh).
 Built with Next.js (App Router), React, TypeScript, Tailwind CSS and Framer Motion. Includes English & Bengali (বাংলা) language toggle.
 
 ## Requirements
