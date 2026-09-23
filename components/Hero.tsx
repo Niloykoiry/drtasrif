@@ -122,7 +122,7 @@ export default function Hero() {
             className="absolute left-[40%] top-1/2 h-[104%] w-[92%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[46%_54%_57%_43%/52%_46%_54%_48%] shadow-glass"
           >
             <Image
-              src="/images/doctor.jpg"
+              src="/images/doctor.png"
               alt={t.hero.title}
               width={1024}
               height={1280}
