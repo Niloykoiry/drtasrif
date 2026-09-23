@@ -244,7 +244,7 @@ const en = {
     mapCity: "Dhaka",
   },
   footer: {
-    copyright: "© 2025 Dr. Tasrif Ahmed. All rights reserved.",
+    copyright: "© 2026 Dr. Tasrif Ahmed. All rights reserved.",
     tagline: ["Precision", "Function", "Aesthetics."],
   },
   chat: {
