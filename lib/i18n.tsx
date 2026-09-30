@@ -48,10 +48,28 @@ const en = {
       {
         title: "Education",
         desc: "Qualifications and academic background ",
+        points: [
+          "AOCMF Fellowship in Oral & Maxillofacial–Head and Neck Oncology – Shanghai Ninth People's Hospital, Shanghai, China  (2026)",
+          "Global Diploma in Oral Cancer – AOCMF & IAOO  (2024–25)",
+          "Fellowship of College of Physicians & Surgeons (FCPS) – Oral and Maxillofacial Surgery, Bangladesh College of Physicians & Surgeons  (2024 – present)",
+          "Master of Surgery (MS) in Oral and Maxillofacial Surgery – Dhaka Dental College Hospital / BSMMU  (July 2022)",
+          "BDS – Dhaka Dental College, University of Dhaka  (January 2013)",
+        ],
       },
       {
         title: "Experience",
         desc: "Professional experience and training ",
+        points: [
+          "Chief Consultant, Dr. Tasrif Ahmed's Oral Cancer & Facial Surgery Center, Dhaka  |  August 2023 – Present",
+          "Assistant Registrar, Department of Oral and Maxillofacial Surgery, Dhaka Dental College Hospital  |  September 2022 – Present",
+          "Assistant Cleft Surgeon – Smile Train Bangladesh (Dinajpur, Dhaka, Mymensingh, Netrokona)  (2016 – Present)",
+          "Visiting Consultant (Craniofacial Trauma) – Popular Medical College Hospital, Dhaka  (July 2022 – Present)",
+          "Visiting Consultant (Oral Oncology) – Ahsania Mission Cancer & General Hospital, Mirpur, Dhaka  (July 2022 – Present)",
+          "Resident – Department of OMS, Dhaka Dental College Hospital  (June 2017 – August 2022)",
+          "Dental Surgeon – Upazilla Health Complex, Kalmakanda, Netrokona  (June 2016 – May 2017)",
+          "Postgraduate Trainee – Department of Conservative Dentistry & Endodontics, BSMMU, Dhaka  (July 2015 – December 2015)",
+          "Postgraduate Trainee – Department of OMS, Dhaka Dental College Hospital  (July 2014 – July 2016)",
+        ],
       },
       {
         title: "Approach",
@@ -62,13 +80,13 @@ const en = {
     modal: {
       title: "About Dr. Tasrif Ahmed",
       p1: "Dr. Tasrif Ahmed is a Oral & Maxillofacial Surgeon based in Dhaka, Bangladesh. He focuses on compassionate, evidence-based surgical care for conditions of the mouth, jaws and face.",
-      p2: "His practice emphasizes careful diagnosis, clear communication and individualized treatment planning, so that every patient understands their options and feels supported throughout care.",
+      p2: "AOCMF Fellow in Oral & Maxillofacial–Head and Neck Oncology, Shanghai Ninth People's Hospital (2026). Seeking an international observership with Prof. Dr. Swennen at AZ Sint-Jan Brugge to gain structured exposure to 3D cephalometric analysis, digital workflow integration, and advanced orthognathic surgical protocols — skills that are critically needed to develop a sustainable orthognathic programme in Bangladesh.",
       points: [
         "Patient-centered, ethical decision making",
         "Modern, evidence-based surgical techniques",
         "Focus on function, aesthetics and quality of life",
       ],
-      note: "Detailed qualifications and experience will be added soon (placeholder information).",
+      note: "",
     },
   },
   spec: {

@@ -7,6 +7,7 @@ import {
   ArrowRight,
   BriefcaseMedical,
   Check,
+  ChevronDown,
   GraduationCap,
   Plus,
   ShieldPlus,
@@ -30,6 +31,9 @@ const GRADIENTS = [
 export default function About() {
   const { t } = useI18n();
   const [open, setOpen] = useState(false);
+  const [expandedCards, setExpandedCards] = useState<Set<number>>(
+    () => new Set(),
+  );
 
   return (
     <section
@@ -76,10 +80,59 @@ export default function About() {
                 {ICONS[i]}
               </span>
               <div>
-                <h3 className="text-sm font-bold text-navy">{card.title}</h3>
-                <p className="mt-1 text-xs leading-relaxed text-slate-500">
-                  {card.desc}
-                </p>
+                <h3>
+                  <button
+                    type="button"
+                    aria-expanded={expandedCards.has(i)}
+                    aria-controls={`about-card-details-${i}`}
+                    onClick={() =>
+                      setExpandedCards((current) => {
+                        const next = new Set(current);
+                        if (next.has(i)) next.delete(i);
+                        else next.add(i);
+                        return next;
+                      })
+                    }
+                    className="group flex w-full items-center justify-between gap-3 text-left text-sm font-bold text-navy"
+                  >
+                    {card.title}
+                    <ChevronDown
+                      aria-hidden="true"
+                      className={`h-4 w-4 shrink-0 text-slate-400 transition-transform duration-200 group-hover:text-teal-600 ${expandedCards.has(i) ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                </h3>
+                <motion.div
+                  id={`about-card-details-${i}`}
+                  aria-hidden={!expandedCards.has(i)}
+                  initial={false}
+                  animate={
+                    expandedCards.has(i)
+                      ? { height: "auto", opacity: 1 }
+                      : { height: 0, opacity: 0 }
+                  }
+                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                  className="overflow-hidden"
+                >
+                  <div className="pt-1">
+                    <p className="text-xs leading-relaxed text-slate-500">
+                      {card.desc}
+                    </p>
+                    {card.points && (
+                      <ul className="mt-3 space-y-2">
+                        {card.points.map((point, j) => (
+                          <li
+                            key={j}
+                            className="flex items-start gap-2 text-xs text-slate-500"
+                          >
+                            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-teal-500" />
+                            {point}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </motion.div>
               </div>
             </div>
           ))}
