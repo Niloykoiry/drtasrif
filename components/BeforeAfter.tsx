@@ -3,22 +3,36 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Images, MoveHorizontal } from "lucide-react";
+import { ArrowDown, ArrowUp, Images, MoveHorizontal } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { fadeUp, stagger } from "@/lib/motion";
 
 const PAIRS = [
-  { before: "/images/Screenshot_408.png", after: "/images/Screenshot_409.png" },
   {
-    before: "/images/Screenshot_410.png",
-    after: "/images/Screenshot_411.png",
+    before: "/images/ba-jaw-before.png",
+    after: "/images/ba-jaw-after.png",
+  },
+  {
+    before: "/images/ba-profile-before.png",
+    after: "/images/ba-profile-after.png",
+  },
+  {
+    before: "/images/Screenshot_408.png",
+    after: "/images/Screenshot_409.png",
   },
   {
     before: "/images/Screenshot_410.png",
     after: "/images/Screenshot_411.png",
   },
-  { before: "/images/Screenshot_408.png", after: "/images/Screenshot_409.png" },
 ];
+
+type BeforeAfterCase = {
+  id: string;
+  title: { en: string; bn: string };
+  description: { en: string; bn: string };
+  beforeImage: string;
+  afterImage: string;
+};
 
 function CompareCard({
   before,
@@ -45,7 +59,7 @@ function CompareCard({
       <div className="relative aspect-[4/3] select-none overflow-hidden rounded-2xl">
         <Image
           src={after}
-          alt=""
+          alt={`${title} after surgery`}
           width={1024}
           height={768}
           className="h-full w-full object-cover"
@@ -56,7 +70,7 @@ function CompareCard({
         >
           <Image
             src={before}
-            alt=""
+            alt={`${title} before surgery`}
             width={1024}
             height={768}
             className="h-full w-full object-cover"
@@ -96,8 +110,31 @@ function CompareCard({
   );
 }
 
-export default function BeforeAfter() {
-  const { t } = useI18n();
+export default function BeforeAfter({
+  cases: publishedCases,
+}: {
+  cases?: BeforeAfterCase[];
+}) {
+  const { t, lang } = useI18n();
+  const [showAll, setShowAll] = useState(false);
+  if (publishedCases?.length === 0) return null;
+
+  const allCases = publishedCases
+    ? publishedCases.map((item) => ({
+        id: item.id,
+        before: item.beforeImage,
+        after: item.afterImage,
+        title: item.title[lang],
+        desc: item.description[lang],
+      }))
+    : t.beforeAfter.cases.slice(0, PAIRS.length).map((item, index) => ({
+        id: `example-${index}`,
+        before: PAIRS[index].before,
+        after: PAIRS[index].after,
+        title: item.title,
+        desc: item.desc,
+      }));
+  const cases = showAll ? allCases : allCases.slice(0, 2);
 
   return (
     <section id="before-after" className="bg-white py-24">
@@ -121,11 +158,11 @@ export default function BeforeAfter() {
           </p>
         </motion.div>
         <div className="mt-12 grid gap-8 md:grid-cols-2">
-          {t.beforeAfter.cases.map((caseItem, i) => (
+          {cases.map((caseItem) => (
             <CompareCard
-              key={caseItem.title}
-              before={PAIRS[i].before}
-              after={PAIRS[i].after}
+              key={caseItem.id}
+              before={caseItem.before}
+              after={caseItem.after}
               title={caseItem.title}
               desc={caseItem.desc}
               note={t.beforeAfter.note}
@@ -137,6 +174,23 @@ export default function BeforeAfter() {
             />
           ))}
         </div>
+        {allCases.length > 2 && (
+          <div className="mt-10 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setShowAll((current) => !current)}
+              aria-expanded={showAll}
+              className="btn-outline"
+            >
+              {showAll ? t.beforeAfter.seeLess : t.beforeAfter.seeMore}
+              {showAll ? (
+                <ArrowUp className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <ArrowDown className="h-4 w-4" aria-hidden="true" />
+              )}
+            </button>
+          </div>
+        )}
       </motion.div>
     </section>
   );

@@ -7,6 +7,7 @@ import { ArrowRight, Check, ChevronLeft, ChevronRight, Stethoscope } from "lucid
 import { useI18n } from "@/lib/i18n";
 import { fadeUp } from "@/lib/motion";
 import Modal from "./Modal";
+import type { PublicService } from "@/lib/public-content";
 
 const IMAGES = [
   "/images/spec-maxillofacial.png",
@@ -16,12 +17,39 @@ const IMAGES = [
   "/images/spec-other.png",
 ];
 
-export default function Specializations() {
-  const { t } = useI18n();
+export default function Specializations({
+  services = [],
+}: {
+  services?: PublicService[];
+}) {
+  const { t, lang } = useI18n();
   const scroller = useRef<HTMLDivElement>(null);
   const [selected, setSelected] = useState<number | null>(null);
-  const active = selected !== null ? t.spec.cards[selected] : null;
-  const activeDetail = selected !== null ? t.spec.details[selected] : null;
+  const cards = services.length
+    ? services.map((service) => ({
+        title: service.content[lang].title,
+        desc: service.content[lang].description,
+        imageUrl: service.imageUrl,
+        imageAlt: service.content[lang].fieldTwo,
+      }))
+    : t.spec.cards.map((card, index) => ({
+        ...card,
+        imageUrl: null,
+        imageAlt: "",
+        index,
+      }));
+  const active = selected !== null ? cards[selected] : null;
+  const activeDetail =
+    selected !== null
+      ? services.length
+        ? {
+            overview:
+              services[selected].content[lang].detail ||
+              services[selected].content[lang].description,
+            points: [],
+          }
+        : t.spec.details[selected]
+      : null;
 
   const scroll = (dir: number) => scroller.current?.scrollBy({ left: dir * 300, behavior: "smooth" });
 
@@ -61,7 +89,7 @@ export default function Specializations() {
       </div>
 
       <div ref={scroller} className="container-x no-scrollbar mt-10 flex snap-x gap-5 overflow-x-auto pb-4">
-        {t.spec.cards.map((card, i) => (
+        {cards.map((card, i) => (
           <motion.article
             key={card.title}
             variants={fadeUp}
@@ -73,10 +101,11 @@ export default function Specializations() {
           >
             <div className="overflow-hidden rounded-2xl bg-gradient-to-br from-sky-100 to-indigo-100">
               <Image
-                src={IMAGES[i]}
+                src={card.imageUrl || IMAGES[i % IMAGES.length]}
                 alt=""
                 width={1024}
                 height={1024}
+                unoptimized={Boolean(card.imageUrl)}
                 className="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105"
               />
             </div>
@@ -97,7 +126,14 @@ export default function Specializations() {
       <Modal open={selected !== null} onClose={() => setSelected(null)} title={active?.title ?? ""}>
         {active && activeDetail && selected !== null && (
           <div>
-            <Image src={IMAGES[selected]} alt="" width={1024} height={1024} className="aspect-[4/3] w-full rounded-2xl object-cover" />
+            <Image
+              src={active.imageUrl || IMAGES[selected % IMAGES.length]}
+              alt={active.imageAlt || active.title}
+              width={1024}
+              height={1024}
+              unoptimized={Boolean(active.imageUrl)}
+              className="aspect-[4/3] w-full rounded-2xl object-cover"
+            />
             <h3 className="mt-5 text-xl font-extrabold text-navy">{active.title}</h3>
             <p className="mt-3 text-sm leading-relaxed text-slate-600">{activeDetail.overview}</p>
             <h4 className="mt-5 text-[11px] font-bold uppercase tracking-[0.18em] text-teal-600">{t.spec.covers}</h4>

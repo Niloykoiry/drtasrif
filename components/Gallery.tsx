@@ -15,10 +15,42 @@ const IMAGES = [
   "/images/gallery-conference.png",
 ];
 
-export default function Gallery() {
-  const { t } = useI18n();
+type GalleryItem = {
+  id: string;
+  title: { en: string; bn: string };
+  meta: { en: string; bn: string };
+  desc: { en: string; bn: string };
+  full: { en: string; bn: string };
+  imageUrl: string;
+};
+
+export default function Gallery({
+  items: publishedItems,
+}: {
+  items?: GalleryItem[];
+}) {
+  const { t, lang } = useI18n();
   const [selected, setSelected] = useState<number | null>(null);
-  const active = selected !== null ? t.gallery.items[selected] : null;
+  const items =
+    publishedItems ??
+    t.gallery.items.map((item, index) => ({
+      id: `example-${index}`,
+      title: { en: item.title, bn: item.title },
+      meta: { en: item.meta, bn: item.meta },
+      desc: { en: item.desc, bn: item.desc },
+      full: { en: item.full, bn: item.full },
+      imageUrl: IMAGES[index],
+    }));
+  const localizedItems = items.map((item) => ({
+    id: item.id,
+    title: item.title[lang],
+    meta: item.meta[lang],
+    desc: item.desc[lang],
+    full: item.full[lang],
+    imageUrl: item.imageUrl,
+  }));
+  const localizedActive = selected !== null ? localizedItems[selected] : null;
+  if (publishedItems?.length === 0) return null;
 
   return (
     <section
@@ -51,18 +83,18 @@ export default function Gallery() {
         </motion.div>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2">
-          {t.gallery.items.map((item, i) => (
+          {localizedItems.map((item, index) => (
             <motion.button
-              key={item.title}
+              key={item.id}
               type="button"
               variants={fadeUp}
-              onClick={() => setSelected(i)}
+              onClick={() => setSelected(index)}
               className="group overflow-hidden rounded-3xl border border-white/70 bg-white/70 text-left shadow-soft backdrop-blur-md transition duration-300 hover:-translate-y-1.5 hover:shadow-glass"
             >
               <div className="relative overflow-hidden">
                 <Image
-                  src={IMAGES[i]}
-                  alt=""
+                  src={item.imageUrl}
+                  alt={item.title}
                   width={1024}
                   height={768}
                   className="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105"
@@ -92,30 +124,32 @@ export default function Gallery() {
       <Modal
         open={selected !== null}
         onClose={() => setSelected(null)}
-        title={active?.title ?? ""}
+        title={localizedActive?.title ?? ""}
         wide
       >
-        {active && selected !== null && (
+        {localizedActive && (
           <div>
             <Image
-              src={IMAGES[selected]}
-              alt=""
+              src={localizedActive.imageUrl}
+              alt={localizedActive.title}
               width={1024}
               height={768}
               className="aspect-[4/3] w-full rounded-2xl object-cover"
             />
             <p className="mt-5 text-[10px] font-bold uppercase tracking-widest text-teal-600">
-              {active.meta}
+              {localizedActive.meta}
             </p>
             <h3 className="mt-1.5 text-xl font-extrabold text-navy">
-              {active.title}
+              {localizedActive.title}
             </h3>
             <p className="mt-3 text-sm leading-relaxed text-slate-600">
-              {active.full}
+              {localizedActive.full}
             </p>
-            <p className="mt-4 text-[11px] italic text-slate-400">
-              {t.gallery.placeholderNote}
-            </p>
+            {localizedActive.id.startsWith("example-") && (
+              <p className="mt-4 text-[11px] italic text-slate-400">
+                {t.gallery.placeholderNote}
+              </p>
+            )}
           </div>
         )}
       </Modal>

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Caveat, Noto_Sans_Bengali, Plus_Jakarta_Sans } from "next/font/google";
-import { LanguageProvider } from "@/lib/i18n";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -35,9 +34,7 @@ export default function RootLayout({
       lang="en"
       className={`${jakarta.variable} ${script.variable} ${bengali.variable}`}
     >
-      <body className="font-sans">
-        <LanguageProvider>{children}</LanguageProvider>
-      </body>
+      <body className="font-sans">{children}</body>
     </html>
   );
 }

@@ -8,6 +8,11 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import {
+  applySectionOverrides,
+  type EditableSection,
+  type PublishedSectionOverrides,
+} from "@/lib/content-translations";
 
 const en = {
   brand: {
@@ -174,11 +179,13 @@ const en = {
   beforeAfter: {
     label: "Before & After",
     heading: "Surgical Transformations",
-    sub: "Representative 3D illustrations of typical surgical goals. Actual case photographs will be added with patient consent.",
+    sub: "Explore illustrative treatment goals and selected case comparisons. Individual results vary.",
     before: "Before",
     after: "After",
     drag: "Drag to compare",
-    note: "Representative illustration — placeholder for actual case photos",
+    note: "Individual treatment plans and outcomes vary.",
+    seeMore: "See more surgeries",
+    seeLess: "See fewer surgeries",
     cases: [
       {
         title: "Jaw Correction (Illustrative)",
@@ -187,6 +194,14 @@ const en = {
       {
         title: "Facial Profile Balance (Illustrative)",
         desc: "Illustration of chin and jaw imbalance before correction and the harmonious profile that treatment plans target.",
+      },
+      {
+        title: "Facial Reconstruction (Demo)",
+        desc: "A comparison illustrating facial reconstruction and fixation following complex facial injury.",
+      },
+      {
+        title: "Facial Profile Surgery (Demo)",
+        desc: "A profile comparison demonstrating changes associated with facial surgery.",
       },
     ],
   },
@@ -411,11 +426,13 @@ const bn: Dict = {
   beforeAfter: {
     label: "আগে ও পরে",
     heading: "সার্জিকাল রূপান্তর",
-    sub: "সাধারণ সার্জিকাল লক্ষ্যের প্রতিনিধিত্বমূলক 3D চিত্র। রোগীর সম্মতিতে প্রকৃত কেসের ছবি শীঘ্রই যুক্ত হবে।",
+    sub: "চিকিৎসার লক্ষ্য বোঝাতে চিত্রায়ন ও নির্বাচিত কেস তুলনা দেখুন। প্রত্যেকের ফলাফল ভিন্ন হতে পারে।",
     before: "আগে",
     after: "পরে",
     drag: "তুলনা করতে টানুন",
-    note: "প্রতিনিধিত্বমূলক চিত্র — প্রকৃত কেসের ছবির স্থানধারক",
+    note: "চিকিৎসা পরিকল্পনা ও ফলাফল ব্যক্তিভেদে ভিন্ন।",
+    seeMore: "আরও সার্জারি দেখুন",
+    seeLess: "কম সার্জারি দেখুন",
     cases: [
       {
         title: "চোয়াল সংশোধন (চিত্রায়ন)",
@@ -424,6 +441,14 @@ const bn: Dict = {
       {
         title: "ফেসিয়াল প্রোফাইল ভারসাম্য (চিত্রায়ন)",
         desc: "সংশোধনের আগে থুতনি ও চোয়ালের অসামঞ্জস্য এবং চিকিৎসার কাঙ্ক্ষিত সুসংগত প্রোফাইলের চিত্রায়ন।",
+      },
+      {
+        title: "মুখমণ্ডল পুনর্গঠন (নমুনা)",
+        desc: "জটিল মুখমণ্ডলের আঘাতের পর পুনর্গঠন ও ফিক্সেশনের একটি তুলনামূলক চিত্র।",
+      },
+      {
+        title: "ফেসিয়াল প্রোফাইল সার্জারি (নমুনা)",
+        desc: "ফেসিয়াল সার্জারির সাথে সম্পর্কিত পরিবর্তন দেখানো একটি প্রোফাইল তুলনা।",
       },
     ],
   },
@@ -512,24 +537,69 @@ export type Lang = "en" | "bn";
 
 const dicts: Record<Lang, Dict> = { en, bn };
 
+export function getDefaultDictionary(language: Lang): Dict {
+  return dicts[language];
+}
+
 const I18nContext = createContext<{
   lang: Lang;
   setLang: (l: Lang) => void;
   t: Dict;
+  getDictionary: (language: Lang) => Dict;
 }>({
   lang: "en",
   setLang: () => {},
   t: en,
+  getDictionary: () => en,
 });
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
+function mergeDictionary(
+  dictionary: Dict,
+  language: Lang,
+  overrides: PublishedSectionOverrides,
+): Dict {
+  const merged = { ...dictionary };
+  const sections = Object.entries(overrides) as [
+    EditableSection,
+    NonNullable<PublishedSectionOverrides[EditableSection]>,
+  ][];
+
+  for (const [section, values] of sections) {
+    const baseSection =
+      section === "base"
+        ? { cta: merged.cta, close: merged.close }
+        : merged[section];
+    const updated = applySectionOverrides(baseSection, values[language]);
+
+    if (section === "base" && updated && typeof updated === "object") {
+      Object.assign(merged, updated);
+    } else if (section !== "base") {
+      Object.assign(merged, { [section]: updated });
+    }
+  }
+
+  return merged;
+}
+
+export function LanguageProvider({
+  children,
+  initialOverrides = {},
+}: {
+  children: ReactNode;
+  initialOverrides?: PublishedSectionOverrides;
+}) {
   const [lang, setLang] = useState<Lang>("en");
 
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
 
-  const value = useMemo(() => ({ lang, setLang, t: dicts[lang] }), [lang]);
+  const getDictionary = (language: Lang) =>
+    mergeDictionary(dicts[language], language, initialOverrides);
+  const value = useMemo(
+    () => ({ lang, setLang, t: getDictionary(lang), getDictionary }),
+    [lang, initialOverrides],
+  );
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 }
 

@@ -5,5 +5,10 @@ build
 .DS_Store
 *.pem
 npm-debug.log*
+.env
 .env*.local
+.env.*
+!.env.example
+.neon
 next-env.d.ts
+.neon

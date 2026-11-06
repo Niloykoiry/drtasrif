@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { fadeUp, stagger } from "@/lib/motion";
+import { submitAppointment } from "@/app/actions/appointments";
 
 function InfoRow({
   icon,
@@ -40,11 +41,39 @@ function InfoRow({
 export default function Appointment() {
   const { t } = useI18n();
   const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
-    e.currentTarget.reset();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    setSubmitted(false);
+    setErrorMessage("");
+    setSubmitting(true);
+
+    try {
+      const result = await submitAppointment({
+        name: formData.get("name"),
+        phone: formData.get("phone"),
+        email: formData.get("email"),
+        date: formData.get("date"),
+        reason: formData.get("reason"),
+      });
+
+      if ("error" in result) {
+        setErrorMessage(result.error ?? "Unable to submit your request. Please try again.");
+        return;
+      }
+
+      form.reset();
+      setSubmitted(true);
+    } catch (error) {
+      console.error("Could not submit appointment request", error);
+      setErrorMessage("Unable to submit your request. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -144,6 +173,10 @@ export default function Appointment() {
                     id="appt-date"
                     name="date"
                     type="date"
+                    required
+                    min={new Intl.DateTimeFormat("en-CA", {
+                      timeZone: "Asia/Dhaka",
+                    }).format(new Date())}
                     className="input-field text-slate-500"
                   />
                 </div>
@@ -170,11 +203,20 @@ export default function Appointment() {
               </div>
               <button
                 type="submit"
-                className="btn-gradient w-full rounded-xl py-3.5 text-sm"
+                disabled={submitting}
+                className="btn-gradient w-full rounded-xl py-3.5 text-sm disabled:cursor-wait disabled:opacity-70"
               >
                 <Send className="h-4 w-4" />
-                {t.appt.submit}
+                {submitting ? "Submitting…" : t.appt.submit}
               </button>
+              {errorMessage && (
+                <p
+                  role="alert"
+                  className="rounded-xl bg-red-50 px-4 py-3 text-xs font-semibold text-red-700"
+                >
+                  {errorMessage}
+                </p>
+              )}
               {submitted && (
                 <p
                   role="status"
